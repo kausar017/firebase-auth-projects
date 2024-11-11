@@ -10,30 +10,36 @@ import Main from './Components/Layout/Main.jsx';
 import Home from './Components/Home/Home.jsx';
 import Login from './Components/Login/Login.jsx';
 import Registion from './Components/Registion/Registion.jsx';
+import AuthPorvaider from './Provaiders/AuthPorvaider.jsx';
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Main></Main>,
-    children: [
-      {
-        path: '/',
-        element: <Home></Home>
-      },
-      {
-        path: '/login',
-        element: <Login></Login>
-      },
-      {
-        path: '/register',
-        element: <Registion></Registion>
-      }
-    ]
-  },
-]);
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Main></Main>,
+      children: [
+        {
+          path: '/',
+          element: <Home></Home>
+        },
+        {
+          path: '/login',
+          element: <Login></Login>
+        },
+        {
+          path: '/register',
+          element: <Registion></Registion>
+        }
+      ]
+    }
+  ],
+
+);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthPorvaider>
+      <RouterProvider router={router} />
+    </AuthPorvaider>
   </StrictMode>,
-)
+);

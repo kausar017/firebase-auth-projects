@@ -1,6 +1,11 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Provaiders/AuthPorvaider";
 
 const Login = () => {
+
+    const { singInUsr } = useContext(AuthContext)
+
 
 
     const handalLogin = (even) => {
@@ -10,6 +15,15 @@ const Login = () => {
 
         console.log(email, password);
 
+        singInUsr(email, password)
+        .then(result => {
+            console.log(result.user);
+            
+        })
+        .catch(error => {
+            console.log('Error', error.message);
+            
+        })
     }
 
 

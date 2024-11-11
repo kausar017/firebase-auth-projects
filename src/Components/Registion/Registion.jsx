@@ -1,8 +1,14 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Provaiders/AuthPorvaider";
 
 
 
 const Registion = () => {
+
+
+
+    const { creactUsar } = useContext(AuthContext)
 
     const handalReagister = even => {
         even.preventDefault();
@@ -12,11 +18,17 @@ const Registion = () => {
         const password = even.target.password.value;
 
         console.log(name, email, password);
-        
+
+        creactUsar(email, password)
+            .then(result => {
+                console.log(result);
+
+            })
+            .catch(error => {
+                console.log('Error', error.message);
+
+            })
     }
-
-
-
 
     return (
         <div className="hero bg-base-100 min-h-[650px]">

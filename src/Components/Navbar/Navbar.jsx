@@ -1,13 +1,29 @@
-import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../Provaiders/AuthPorvaider";
 
 const Navbar = () => {
 
-    const link = <>
-        <li><NavLink to={'/'}>Home</NavLink></li>
-        <li><NavLink to={'/login'}>Login</NavLink></li>
-        <li><NavLink to={'/register'}>Register</NavLink></li>
-    </>
+    const authInfo = useContext(AuthContext);
+    console.log(authInfo);
 
+    const handalSingOut = () => {
+        authInfo.signOutUser()
+        .then(()=> {
+            console.log('user sing out successfully ');
+            
+        })
+        .catch(error => console.log('Error', error.message)
+        )
+    }
+
+    const link = (
+        <>
+            <li><NavLink to={'/'}>Home</NavLink></li>
+            <li><NavLink to={'/login'}>Login</NavLink></li>
+            <li><NavLink to={'/register'}>Register</NavLink></li>
+        </>
+    );
 
     return (
         <div className="bg-base-300">
@@ -31,18 +47,26 @@ const Navbar = () => {
                         <ul
                             tabIndex={0}
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                           {link}
+                            {link}
                         </ul>
                     </div>
                     <a className="btn btn-ghost text-xl">daisyUI</a>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
-                       {link}
+                        {link}
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn">Button</a>
+                    {
+                        authInfo.user ?
+                            <>
+                                <a>{authInfo.user?.email}</a>
+                                <a onClick={handalSingOut} className="btn"> Sing Out</a>
+                            </>
+                            :
+                            <Link className="btn" to={'/login'}>Login</Link>
+                    }
                 </div>
             </div>
         </div>
